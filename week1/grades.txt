@@ -1,0 +1,327 @@
+See the Assessment Guide for information on how to interpret this report.
+
+ASSESSMENT SUMMARY
+
+Compilation:  PASSED
+API:          PASSED
+
+Findbugs:     PASSED
+PMD:          PASSED
+Checkstyle:   PASSED
+
+Correctness:  30/30 tests passed
+Memory:       8/8 tests passed
+Timing:       20/20 tests passed
+
+Aggregate score: 100.00%
+[Compilation: 5%, API: 5%, Findbugs: 0%, PMD: 0%, Checkstyle: 0%, Correctness: 60%, Memory: 10%, Timing: 20%]
+
+ASSESSMENT DETAILS
+
+The following files were submitted:
+----------------------------------
+4.8K Jan 31 17:58 Percolation.java
+2.9K Jan 31 17:58 PercolationStats.java
+
+
+********************************************************************************
+*  COMPILING                                                                    
+********************************************************************************
+
+
+% javac Percolation.java
+*-----------------------------------------------------------
+
+% javac PercolationStats.java
+*-----------------------------------------------------------
+
+
+================================================================
+
+
+Checking the APIs of your programs.
+*-----------------------------------------------------------
+Percolation:
+
+PercolationStats:
+
+================================================================
+
+
+********************************************************************************
+*  CHECKING STYLE AND COMMON BUG PATTERNS                                       
+********************************************************************************
+
+
+% findbugs *.class
+*-----------------------------------------------------------
+
+
+================================================================
+
+
+% pmd .
+*-----------------------------------------------------------
+PercolationStats.java:19: Can you replace the instance (or static) variable 'thresholds' with a local variable? [SingularField]
+PercolationStats.java:20: The private instance (or static) variable 'mean' can be made 'final'; it is initialized only in the declaration or constructor. [ImmutableField]
+PercolationStats.java:21: The private instance (or static) variable 'stddev' can be made 'final'; it is initialized only in the declaration or constructor. [ImmutableField]
+PercolationStats.java:22: The private instance (or static) variable 'confidenceLo' can be made 'final'; it is initialized only in the declaration or constructor. [ImmutableField]
+PercolationStats.java:23: The private instance (or static) variable 'confidenceHi' can be made 'final'; it is initialized only in the declaration or constructor. [ImmutableField]
+PMD ends with 5 warnings.
+
+
+================================================================
+
+
+% checkstyle *.java
+*-----------------------------------------------------------
+
+% custom checkstyle checks for Percolation.java
+*-----------------------------------------------------------
+
+% custom checkstyle checks for PercolationStats.java
+*-----------------------------------------------------------
+
+
+================================================================
+
+
+********************************************************************************
+*  TESTING CORRECTNESS
+********************************************************************************
+
+Testing correctness of Percolation
+*-----------------------------------------------------------
+Running 15 total tests.
+
+Tests 1 through 8 create a Percolation object using your code, then repeatedly
+open sites by calling open(). After each call to open(), it checks the return
+values of isOpen(), percolates(), numberOfOpenSites(), and isFull() in that order.
+Except as noted, a site is opened at most once.
+
+Tests 13 through 15 test backwash.
+
+Test 1: open predetermined list of sites using file inputs
+  * filename = input6.txt
+  * filename = input8.txt
+  * filename = input8-no.txt
+  * filename = input10-no.txt
+  * filename = greeting57.txt
+  * filename = heart25.txt
+==> passed
+
+Test 2: open random sites until just before system percolates
+  * n = 3
+  * n = 5
+  * n = 10
+  * n = 10
+  * n = 20
+  * n = 20
+  * n = 50
+  * n = 50
+==> passed
+
+Test 3: open predetermined sites for n = 1 and n = 2 (corner case test)
+  * filename = input1.txt
+  * filename = input1-no.txt
+  * filename = input2.txt
+  * filename = input2-no.txt
+==> passed
+
+Test 4: check predetermined sites with long percolating path
+  * filename = snake13.txt
+  * filename = snake101.txt
+==> passed
+
+Test 5: open every site
+  * filename = input5.txt
+==> passed
+
+Test 6: open random sites until just before system percolates,
+        allowing open() to be called on a site more than once
+  * n = 3
+  * n = 5
+  * n = 10
+  * n = 10
+  * n = 20
+  * n = 20
+  * n = 50
+  * n = 50
+==> passed
+
+Test 7: call methods with invalid arguments
+  * n = 10, (row, col) = (-1, 5)
+  * n = 10, (row, col) = (11, 5)
+  * n = 10, (row, col) = (0, 5)
+  * n = 10, (row, col) = (5, -1)
+  * n = 10, (row, col) = (5, 11)
+  * n = 10, (row, col) = (5, 0)
+  * n = 10, (row, col) = (-2147483648, -2147483648)
+  * n = 10, (row, col) = (2147483647, 2147483647)
+==> passed
+
+Test 8: call constructor with invalid argument
+  * n = -10
+  * n = -1
+  * n = 0
+==> passed
+
+Test 9: create multiple Percolation objects at the same time
+        (to make sure you didn't store data in static variables)
+==> passed
+
+Test 10: open predetermined list of sites using file inputs,
+         but permute the order in which methods are called
+  * filename = input8.txt;  order =     isFull(),     isOpen(), percolates()
+  * filename = input8.txt;  order =     isFull(), percolates(),     isOpen()
+  * filename = input8.txt;  order =     isOpen(),     isFull(), percolates()
+  * filename = input8.txt;  order =     isOpen(), percolates(),     isFull()
+  * filename = input8.txt;  order = percolates(),     isOpen(),     isFull()
+  * filename = input8.txt;  order = percolates(),     isFull(),     isOpen()
+==> passed
+
+Test 11: call all methods in random order until just before system percolates
+  * n = 3
+  * n = 5
+  * n = 7
+  * n = 10
+  * n = 20
+  * n = 50
+==> passed
+
+Test 12: call all methods in random order until almost all sites are open,
+         but with inputs not prone to backwash
+  * n = 3
+  * n = 5
+  * n = 7
+  * n = 10
+  * n = 20
+  * n = 50
+==> passed
+
+Test 13: check for backwash with predetermined sites
+  * filename = input20.txt
+  * filename = input10.txt
+  * filename = input50.txt
+  * filename = jerry47.txt
+  * filename = sedgewick60.txt
+  * filename = wayne98.txt
+==> passed
+
+Test 14: check for backwash with predetermined sites that have
+         multiple percolating paths
+  * filename = input3.txt
+  * filename = input4.txt
+  * filename = input7.txt
+==> passed
+
+Test 15: call all methods in random order until all sites are open,
+         allowing isOpen() to be called on a site more than once
+         (these inputs are prone to backwash)
+  * n = 3
+  * n = 5
+  * n = 7
+  * n = 10
+  * n = 20
+  * n = 50
+==> passed
+
+
+Total: 15/15 tests passed!
+
+
+================================================================
+********************************************************************************
+*  TESTING CORRECTNESS (substituting reference Percolation)
+********************************************************************************
+
+Testing correctness of PercolationStats
+*-----------------------------------------------------------
+Running 15 total tests.
+
+Test 1: check that methods in PercolationStats do not print to standard output
+  * n =  20, trials =  10
+  * n =  50, trials =  20
+  * n = 100, trials =  50
+  * n =  64, trials = 150
+==> passed
+
+Test 2: check that mean() returns value in expected range
+  * n =   2, trials = 10000
+  * n =   5, trials = 10000
+  * n =  10, trials = 10000
+  * n =  25, trials = 10000
+==> passed
+
+Test 3: check that stddev() returns value in expected range
+  * n =   2, trials = 10000
+  * n =   5, trials = 10000
+  * n =  10, trials = 10000
+  * n =  25, trials = 10000
+==> passed
+
+Test 4: check that PercolationStats creates trials Percolation objects, each of size n-by-n
+  * n =  20, trials =  10
+  * n =  50, trials =  20
+  * n = 100, trials =  50
+  * n =  64, trials = 150
+==> passed
+
+Test 5: check that PercolationStats calls open() until system percolates
+  * n =  20, trials =  10
+  * n =  50, trials =  20
+  * n = 100, trials =  50
+  * n =  64, trials = 150
+==> passed
+
+Test 6: check that PercolationStats does not call open() after system percolates
+  * n =  20, trials =  10
+  * n =  50, trials =  20
+  * n = 100, trials =  50
+  * n =  64, trials = 150
+==> passed
+
+Test 7: check that mean() is consistent with the number of intercepted calls to open()
+        on blocked sites
+  * n =  20, trials =  10
+  * n =  50, trials =  20
+  * n = 100, trials =  50
+  * n =  64, trials = 150
+==> passed
+
+Test 8: check that stddev() is consistent with the number of intercepted calls to open()
+        on blocked sites
+  * n =  20, trials =  10
+  * n =  50, trials =  20
+  * n = 100, trials =  50
+  * n =  64, trials = 150
+==> passed
+
+Test 9: check that confidenceLo() and confidenceHigh() are consistent with mean() and stddev()
+  * n =  20, trials =  10
+  * n =  50, trials =  20
+  * n = 100, trials =  50
+  * n =  64, trials = 150
+==> passed
+
+Test 10: check that exception is thrown if either n or trials is out of bounds
+  * n = -23, trials =  42
+  * n =  23, trials =   0
+  * n = -42, trials =   0
+  * n =  42, trials =  -1
+  * n = -2147483648, trials = -2147483648
+==> passed
+
+Test 11: create two PercolationStats objects at the same time and check mean()
+         (to make sure you didn't store data in static variables)
+  * n1 =  50, trials1 =  10, n2 =  50, trials2 =   5
+  * n1 =  50, trials1 =   5, n2 =  50, trials2 =  10
+  * n1 =  50, trials1 =  10, n2 =  25, trials2 =  10
+  * n1 =  25, trials1 =  10, n2 =  50, trials2 =  10
+  * n1 =  50, trials1 =  10, n2 =  15, trials2 = 100
+  * n1 =  15, trials1 = 100, n2 =  50, trials2 =  10
+==> passed
+
+Test 12: check that the methods return the same value, regardless of
+         the order in which they are called
+  * n =  20…
