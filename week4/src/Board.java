@@ -39,11 +39,12 @@ public final class Board {
      */
     public int hamming() {
         int result = 0;
+        outerloop:
         for (int i = 0, count = 1; i < dimension; i++) {
-            for (int j = 0; j < dimension; i++) {
+            for (int j = 0; j < dimension; j++) {
                 if (i == dimension - 1 && j == dimension - 1) {
                     // ignore last element in the board
-                    break;
+                    break outerloop;
                 }
                 if (blocks[i][j] != count) {
                     result++;
@@ -60,7 +61,19 @@ public final class Board {
      * @return sum of Manhattan distances between blocks and goal
      */
     public int manhattan() {
-        return 0;
+        int result = 0;
+        for (int i = 0; i < dimension; i++) {
+            for (int j = 0; j < dimension; j++) {
+                int current = blocks[i][j];
+                if (current == 0) {
+                    continue;
+                }
+                int vertDist = Math.abs(i - (current - 1) / dimension);
+                int horiDist = Math.abs(j - (current - 1) % dimension);
+                result += vertDist + horiDist;
+            }
+        }
+        return result + numMoves;
     }
 
     /**
