@@ -82,8 +82,17 @@ public final class Board {
      * @return is this board the goal board?
      */
     public boolean isGoal() {
-        return false;
-
+        for (int i = 0; i < dimension; i++) {
+            for (int j = 0; j < dimension; j++) {
+                if (i == dimension - 1 && j == dimension - 1) {
+                    break;
+                }
+                if (blocks[i][j] != i * dimension + j + 1) {
+                    return false;
+                }
+            }
+        }
+        return true;
     }
 
     /**

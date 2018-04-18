@@ -22,4 +22,16 @@ public class BoardTest {
         assertEquals(10, board.manhattan());
     }
 
+    @Test
+    public void testIsGoal() {
+        assertFalse(board.isGoal());
+    }
+
+    @Test
+    public void testIsGoal2() {
+        int[][] blocks = new int[][]{{1, 2, 3}, {4, 5, 6}, {7, 8, 0}};
+        board = new Board(blocks);
+        assertTrue(board.isGoal());
+    }
+
 }
